@@ -14,12 +14,13 @@ yes | cp -rf fys.conf /etc/apache2/sites-available/fys.conf
 chmod 644 /etc/apache2/sites-available/fys.conf
 a2dissite 000-default
 a2ensite fys
-systemctl restart apache2
 mkdir /var/www/fys
 mkdir /var/www/fys/html
 mkdir /var/www/fys/wsgi
 chown -R www-data:www-data /var/www/fys
 chmod -R 775 /var/www/fys
+yes | cp -rf FYS_website/* /var/www/fys/wsgi
+systemctl restart apache2
 
 #hostapd.conf
 yes | cp -rf hostapd.conf /etc/hostapd/hostapd.conf
