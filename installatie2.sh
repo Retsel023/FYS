@@ -3,7 +3,7 @@
 apt update && apt upgrade -y
 
 #installs
-apt install git python3 python3-pip apache2 libapache2-mod-wsgi-py3 hostapd dnsmasq mariadb-server -y
+apt install git python3 python3-pip apache2 apache2-dev libapache2-mod-wsgi-py3 hostapd dnsmasq mariadb-server -y
 
 #git
 git clone https://github.com/Retsel023/FYS.git
