@@ -3,7 +3,10 @@
 apt update && apt upgrade -y
 
 #installs
-apt install git python3 python3-pip python-dev apache2 apache2-dev libapache2-mod-wsgi-py3 hostapd dnsmasq mariadb-server -y
+apt install git python3 python3-pip python-dev apache2 apache2-dev libapache2-mod-wsgi-py3 hostapd dnsmasq mariadb-server mariadb-client libmariadb-dev -y
+pip3 install Flask mod-wsgi mariadb
+curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash
+apt update && apt upgrade -y
 
 #git
 git clone https://github.com/Retsel023/FYS.git
@@ -21,7 +24,6 @@ apt install python3-virtualenv
 virtualenv venv
 source venv/bin/activate
 deactivate
-pip install Flask
 cd /home/FYS
 yes | cp -rf FYS_website/website/* /var/www/fys
 systemctl restart apache2
