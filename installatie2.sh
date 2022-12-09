@@ -68,5 +68,4 @@ mariadb -u root -p"nopass" -e "CREATE USER 'Flightmanager'@localhost IDENTIFIED 
 mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON *.* TO 'Flightmanager'@localhost IDENTIFIED BY 'SecretKey##11WXX';"
 mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON FYS.* TO 'Flightmanager'@localhost;"
 mariadb -u root -p"nopass" -e "FLUSH PRIVILEGES;"
-mariadb -u root -p"nopass" -e "USE FYS;"
-mariadb -u root -p"nopass" -e "CREATE TABLE Persoon(Naam VARCHAR(45), Ticketnummer VARCHAR(12), Vluchtnummer VARCHAR(10));"
+mariadb -u root -p"nopass" -e "CREATE TABLE FYS.Persoon(Naam VARCHAR(45), Ticketnummer VARCHAR(12), Vluchtnummer VARCHAR(10));"
