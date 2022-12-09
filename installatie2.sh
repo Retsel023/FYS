@@ -3,11 +3,12 @@
 apt update && apt upgrade -y
 
 #installs
-apt install git python3 python3-pip apache2 apache2-dev libapache2-mod-wsgi-py3 hostapd dnsmasq mariadb-server -y
+apt install git python3 python3-pip python-dev apache2 apache2-dev libapache2-mod-wsgi-py3 hostapd dnsmasq mariadb-server -y
 
 #git
 git clone https://github.com/Retsel023/FYS.git
-cd FYS
+mv -r /FYS /home/FYS 
+cd /home/FYS
 
 #fys.conf and apache config
 yes | cp -rf fys.conf /etc/apache2/sites-available/fys.conf
@@ -15,11 +16,14 @@ chmod 644 /etc/apache2/sites-available/fys.conf
 a2dissite 000-default
 a2ensite fys
 mkdir /var/www/fys
-mkdir /var/www/fys/html
-mkdir /var/www/fys/wsgi
-chown -R www-data:www-data /var/www/fys
-chmod -R 775 /var/www/fys
-yes | cp -rf FYS_website/* /var/www/fys/wsgi
+cd /var/www/fys
+apt install python3-virtualenv
+virtualenv venv
+source venv/bin/activate
+deactivate
+pip install Flask
+cd /home/FYS
+yes | cp -rf FYS_website/website/* /var/www/fys
 systemctl restart apache2
 
 #hostapd.conf
