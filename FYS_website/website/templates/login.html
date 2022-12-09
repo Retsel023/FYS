@@ -2,6 +2,9 @@
 {% block title %}Login{% endblock %}
 {% block navbar_element %}Login{% endblock %}
 {% block content %}
+
+
+
 <h3 align="center">Login</h3>
 <form class="container" method="post">
     <div class="form-group">
@@ -12,15 +15,12 @@
       <label for="ticket_number">Ticket Number</label>
       <input type="text" name="ticket_number" class="form-control" id="ticket_number" placeholder="Enter Ticket Number">
     </div>
-    <div class="form-group">
-      <label for="Password">Password</label>
-      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
-    </div>
     <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">I accept the Terms & Conditions</label>
+      <input type="checkbox" class="form-check-input" id="checkbox_terms" name="checkbox_terms">
+      <label class="form-check-label" for="checkbox_terms">I accept the Terms & Conditions</label>
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Login</button>
 </form>
+  
 {% endblock %}
