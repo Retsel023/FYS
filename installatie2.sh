@@ -61,3 +61,12 @@ chmod +x /etc/rc.local
 systemctl unmask rc-local
 systemctl enable rc-local
 systemctl start rc-local
+
+#Database
+mariadb -u root -p"nopass" -e "CREATE DATABASE FYS;"
+mariadb -u root -p"nopass" -e "CREATE USER 'Flightmanager'@localhost IDENTIFIED BY 'SecretKey##11WXX';"
+mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON *.* TO 'Flightmanager'@localhost IDENTIFIED BY 'SecretKey##11WXX';"
+mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON FYS.* TO 'Flightmanager'@localhost;"
+mariadb -u root -p"nopass" -e "FLUSH PRIVILEGES;"
+mariadb -u root -p"nopass" -e "USE FYS;"
+mariadb -u root -p"nopass" -e "CREATE TABLE Persoon(Naam VARCHAR(45), Ticketnummer VARCHAR(12), Vluchtnummer VARCHAR(10));"
