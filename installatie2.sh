@@ -71,3 +71,7 @@ mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON *.* TO 'Flightmanager'@lo
 mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON FYS.* TO 'Flightmanager'@localhost;"
 mariadb -u root -p"nopass" -e "FLUSH PRIVILEGES;"
 mariadb -u root -p"nopass" -e "CREATE TABLE FYS.Persoon(Naam VARCHAR(45), Ticketnummer VARCHAR(12), Vluchtnummer VARCHAR(10));"
+
+#https certificate
+openssl req -x509 -nodes -newkey rsa:2048 -keyout /var/www/server.key -out /var/www/server.crt
+
