@@ -18,6 +18,7 @@ yes | cp -rf fys.conf /etc/apache2/sites-available/fys.conf
 chmod 644 /etc/apache2/sites-available/fys.conf
 a2dissite 000-default
 a2ensite fys
+a2enmod ssl
 mkdir /var/www/fys
 cd /var/www/fys
 apt install python3-virtualenv
@@ -44,7 +45,7 @@ yes | cp -rf dnsmasq.service /lib/systemd/system/dnsmasq.service
 
 #netplan
 yes | cp -rf 50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml
-netplan apply
+#netplan apply
 
 #ipv4 forwarding
 yes | cp -rf sysctl.conf /etc/sysctl.conf
@@ -74,3 +75,5 @@ mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON *.* TO 'Flightmanager'@lo
 mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON FYS.* TO 'Flightmanager'@localhost;"
 mariadb -u root -p"nopass" -e "FLUSH PRIVILEGES;"
 mariadb -u root -p"nopass" -e "CREATE TABLE FYS.Persoon(Naam VARCHAR(45), Ticketnummer VARCHAR(12), Vluchtnummer VARCHAR(10));"
+
+netplan apply
