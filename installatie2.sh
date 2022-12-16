@@ -5,7 +5,7 @@ apt update && apt upgrade -y
 #installs
 apt install git python3 python3-pip python-dev apache2 apache2-dev libapache2-mod-wsgi-py3 hostapd dnsmasq mariadb-server mariadb-client libmariadb-dev -y
 pip3 install Flask mod-wsgi mariadb
-curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash
+#curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash
 apt update && apt upgrade -y
 
 #git
@@ -76,4 +76,4 @@ mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON FYS.* TO 'Flightmanager'@
 mariadb -u root -p"nopass" -e "FLUSH PRIVILEGES;"
 mariadb -u root -p"nopass" -e "CREATE TABLE FYS.Persoon(Naam VARCHAR(45), Ticketnummer VARCHAR(12), Vluchtnummer VARCHAR(10));"
 
-netplan apply
+netplan apply && reboot
