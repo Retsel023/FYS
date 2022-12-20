@@ -1,18 +1,17 @@
-{% extends "base.html" %}
-{% block title %}Media{% endblock %}
-{% block navbar_element %}
-
 {% if session["login"] == 'No' %}
 Login
 {% else %}
 Logout
 {% endif %}
-
-
 {% endblock %}
+
 {% block content %}
 <h3 align="center">Media Page</h3>
 <section align="center">
-    <iframe width="700" height="450" src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1"></iframe>
+    <video width="700" height="450" controls>
+        <source src="{{ url_for('static', filename='images/fysvideo.mp4')}}" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+    </video>
 </section>
+<h4 align="center">Fijne vlucht gewenst</h4>
 {% endblock %}
