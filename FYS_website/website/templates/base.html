@@ -49,63 +49,30 @@
            
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
                 <ul class="navbar-nav ml-auto">
-
                     <li class="nav-item active">
-
-                        <a class="nav-link" href="home.html">Home</a>
-
+                        <a class="nav-link" href="/">Home</a>
                     </li>
-
                     <li class="nav-item active">
-
-                        <a class="nav-link" href="media.html">Media</a>
-
+                        <a class="nav-link" href="/media">Media</a>
                     </li>
-
                     <li class="nav-item active">
-
-                        <a class="nav-link" href="logout.html">logout</a>
-
+                        <a class="nav-link" href="/login">{% block navbar_element %}{% endblock %}</a>
                     </li>
-
                 </ul>
-
             </div>
-
     </nav>
-
-
-
     {% with messages = get_flashed_messages() %}
-
         {% for message in messages %}
-
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
-
             {{ message }}
-
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-
                 <span aria-hidden="true">&times;</span>
-
             </button>
-
         </div>
-
         {% endfor %}
-
     {% endwith %}
-
-
-
-
-
     {% block content %}{% endblock %}
-
     <script>"{{ url_for('static', filename='main.js')}}"</script>
-
 </body>
-
 </html>
