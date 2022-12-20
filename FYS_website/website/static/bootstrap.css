@@ -5,6 +5,9 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+video {
+  object-fit: cover;
+}
 
 :root {
   --blue: #007bff;
