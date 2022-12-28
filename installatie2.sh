@@ -10,8 +10,8 @@ apt update && apt upgrade -y
 
 #git
 git clone https://github.com/Retsel023/FYS.git
-mv -r /FYS /home/FYS 
-cd /home/FYS
+mv -r /FYS /home/pi/FYS 
+cd /home/pi/FYS
 
 #fys.conf and apache config
 yes | cp -rf fys.conf /etc/apache2/sites-available/fys.conf
@@ -25,7 +25,7 @@ apt install python3-virtualenv
 virtualenv venv
 source venv/bin/activate
 deactivate
-cd /home/FYS
+cd /home/pi/FYS
 yes | cp -rf FYS_website/website/* /var/www/fys
 
 #https certificate
