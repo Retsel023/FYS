@@ -30,6 +30,10 @@ cd /var/www/fys
 apt install python3-virtualenv
 virtualenv venv
 source venv/bin/activate
+#chmod 777 venv/lib/python3.10/site-packages/
+#chmod 777 venv/bin
+#pip install flask
+#pip install mariadb
 deactivate
 cd /home/pi/FYS
 yes | cp -rf FYS_website/website/* /var/www/fys
