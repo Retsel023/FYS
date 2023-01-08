@@ -2,6 +2,7 @@
 #updates
 echo "Preparing Updates..."
 apt update && apt upgrade -y
+apt autoremove -y
 echo "Done Updating!"
 
 #installs
