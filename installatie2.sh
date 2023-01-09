@@ -87,9 +87,8 @@ systemctl start rc-local
 #Database
 echo "Setting up the database..."
 mariadb -u root -p"nopass" -e "CREATE DATABASE FYS;"
-mariadb -u root -p"nopass" -e "CREATE USER 'Flightmanager'@localhost IDENTIFIED BY 'SecretKey##11WXX';"
-mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON *.* TO 'Flightmanager'@localhost IDENTIFIED BY 'SecretKey##11WXX';"
-mariadb -u root -p"nopass" -e "GRANT ALL PRIVILEGES ON FYS.* TO 'Flightmanager'@localhost;"
+mariadb -u root -p"nopass" -e "CREATE USER 'Flightmanager'@'%' IDENTIFIED BY 'SecretKey##11WXX';"
+mariadb -u root -p"nopass" -e "GRANT SELECT ON FYS.* TO 'Flightmanager'@'%';"
 mariadb -u root -p"nopass" -e "FLUSH PRIVILEGES;"
 mariadb -u root -p"nopass" -e "CREATE TABLE FYS.Persoon(Naam VARCHAR(45), Ticketnummer VARCHAR(12), Vluchtnummer VARCHAR(10));"
 
