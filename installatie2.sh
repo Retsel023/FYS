@@ -7,7 +7,7 @@ echo "Done Updating!"
 
 #installs
 echo "Preparing Installation items..."
-apt install git python3 python3-pip apache2 libapache2-mod-wsgi-py3 hostapd dnsmasq mariadb-server mariadb-client libmariadb-dev -y
+apt install git python3 python3-pip apache2 apache2-dev libapache2-mod-wsgi-py3 hostapd dnsmasq mariadb-server mariadb-client libmariadb-dev -y
 pip3 install Flask mod-wsgi mariadb 
 #pip3 install mod-wsgi-httpd
 #curl -LsS https://r.mariadb.com/downloads/mariadb_repo_setup | sudo bash
