@@ -43,6 +43,13 @@ echo "creating the certificate..."
 openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /var/www/server.key -out /var/www/server.crt -subj "/C=NL/ST=North-Holland/L=Amsterdam/CN=127.0.1.1"
 systemctl restart apache2
 
+#Destroy systemd-resolved
+echo "Deactivating systemd-resolved"
+systemctl disable systemd-resolved
+systemctl stop systemd-resolved
+systemctl mask systemd-resolved
+
+
 #hostapd.conf
 echo "Hostapd configuration preparation..."
 yes | cp -rf hostapd.conf /etc/hostapd/hostapd.conf
