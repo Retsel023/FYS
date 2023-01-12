@@ -72,5 +72,10 @@ def login():
 def media():
     return render_template('media.html')
 
+# Terms and Conditions page
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
 if __name__ == "__main__":
     app.run()
