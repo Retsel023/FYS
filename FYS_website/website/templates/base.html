@@ -1,90 +1,83 @@
-# Module Imports
-from flask import Flask, render_template, request, session, redirect, url_for, flash
-import mariadb
-import sys
-import os
-import subprocess
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- get the CSS stylesheet from static/style.css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='bootstrap.css')}}"
+    />
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.urandom(23)
-
-# Connect to MariaDB Platform
-try:
-    conn = mariadb.connect(
-        user="Flightmanager",
-        password="SecretKey##11WXX",
-        host="127.0.0.1",
-        port=3306,
-        database="FYS"
-    )
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='images/logo.png')}}" height="45" alt="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/media">Media</a>
+                    </li>
+                    {% if session["login"] != "Yes" %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-warning" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
     
-except mariadb.Error as e:
-    print(f"Error connecting to MariaDB Platform: {e}")
-    sys.exit(1)
-
-# Get Cursor
-cur = conn.cursor()
-
-# home page
-@app.route('/')
-def home():
-    try:
-        if session["login"] == "Yes":
-            return render_template("home.html")
-        else:
-            flash("Please login first")
-    except:
-        return redirect("login")
-    return redirect("login")
-    
-# login page 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    session["login"] = "No"
-    if request.method == 'POST':
-        try:
-            query = "SELECT * FROM Persoon WHERE Naam = %s AND Ticketnummer = %s;"
-            ticket_number = request.form.get('ticket_number')
-            checkbox_terms = request.form.get('checkbox_terms')
-            Name = request.form.get('username')
-            cur.execute(query, (Name, ticket_number, ))
-            Name, ticket_number_validator, flight_number = cur.fetchone()
-            session["Name"], session["ticket_number"], session["flight_number"] = Name, ticket_number_validator, flight_number
-        except:
-            Name = False
-        if checkbox_terms == "on":
-            if Name:
-                if ticket_number == ticket_number_validator:
-                    session["login"] = "Yes"
-                    try:
-                        subprocess.call(["sudo", "iptables", "-t", "nat", "-I", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
-                    except:
-                        return redirect(url_for("home"))
-                    return redirect(url_for("home"))
-                else:
-                    flash("Name or Ticketnumber is incorrect!")
-            else:
-                flash("Name or Ticketnumber is incorrect!")
-        else:
-            flash("Please accept the Terms & Conditions")
-
-    return render_template("login.html")
-
-# Logout page
-@app.route("/logout")
-def logout():
-    return render_template('logout.html')
-
-# Media page
-@app.route('/media')
-def media():
-    return render_template('media.html')
-
-# Terms and Conditions page
-@app.route('/terms')
-def terms():
-    return render_template('terms.html')
-
-
-if __name__ == "__main__":
-    app.run()
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+    <!-- <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script> -->
+    <!-- a tool used to make writing common JavaScript tasks more concise -->
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.2.1.min.js')}}"></script>
+    <!-- positioning engine, its purpose is to calculate the position of an element to make it possible to position it near a given reference element -->
+    <script type="text/javascript" src="{{ url_for('static', filename='popper.min.js')}}"></script>
+    <!-- bootstrap javascript file -->
+    <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js')}}"></script>
+</body>
+</html>
