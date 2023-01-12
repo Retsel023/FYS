@@ -8,5 +8,4 @@ network:
             dhcp4: no
             addresses:
             - 192.168.4.1/24
-            nameservers:
-                addresses: [1.1.1.1, 1.0.0.1]
+
