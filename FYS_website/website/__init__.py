@@ -1,8 +1,9 @@
 # Module Imports
-from flask import Flask, Blueprint, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 import mariadb
 import sys
 import os
+import subprocess
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(23)
@@ -41,22 +42,24 @@ def home():
 def login():
     session["login"] = "No"
     if request.method == 'POST':
-        query_user = "SELECT Naam FROM Persoon WHERE Naam = %s;"
-        query_ticket = "SELECT Ticketnummer FROM Persoon WHERE Naam = %s;"
-        # Getting values from the login form
-        ticket_number = request.form.get('ticket_number')
-        checkbox_terms = request.form.get('checkbox_terms')
-        Name = request.form.get('username')
-        cur.execute(query_user, (Name, ))
-        user = cur.fetchone()
-        cur.execute(query_ticket, (Name, ))
-        ticket_validation = cur.fetchone()
-        session["Name"], session["Ticket_number"] = Name, ticket_number
+        try:
+            query = "SELECT * FROM Persoon WHERE Naam = %s AND Ticketnummer = %s;"
+            ticket_number = request.form.get('ticket_number')
+            checkbox_terms = request.form.get('checkbox_terms')
+            Name = request.form.get('username')
+            cur.execute(query, (Name, ticket_number, ))
+            Name, ticket_number_validator, flight_number = cur.fetchone()
+            session["Name"], session["ticket_number"], session["flight_number"] = Name, ticket_number_validator, flight_number
+        except:
+            Name = False
         if checkbox_terms == "on":
-            if user:
-                print("enter user")
-                if ticket_number == ticket_validation[0]:
+            if Name:
+                if ticket_number == ticket_number_validator:
                     session["login"] = "Yes"
+                    try:
+                        subprocess.call(["sudo", "iptables", "-t", "nat", "-I", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
+                    except:
+                        return redirect(url_for("home"))
                     return redirect(url_for("home"))
                 else:
                     flash("Name or Ticketnumber is incorrect!")
@@ -67,7 +70,12 @@ def login():
 
     return render_template("login.html")
 
-# media page
+# Logout page
+@app.route("/logout")
+def logout():
+    return render_template('logout.html')
+
+# Media page
 @app.route('/media')
 def media():
     return render_template('media.html')
@@ -76,6 +84,7 @@ def media():
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
+
 
 if __name__ == "__main__":
     app.run()
