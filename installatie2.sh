@@ -91,6 +91,21 @@ systemctl unmask rc-local
 systemctl enable rc-local
 systemctl start rc-local
 
+#ip-tables executeble for www-data user
+#create dirs
+mkdir /home/www-data
+mkdir /home/www-data/bin
+#copy iptables executeble
+cp /usr/sbin/iptables /home/www-data/bin/iptables
+#reset permissions on the copy
+chmod 000 /home/www-data/bin/iptables
+id www-data
+#change ownership and permissions
+chown -R www-data.www-data /home/www-data/bin/iptables
+chmod -R 500 /home/www-data/bin/iptables
+#set file cpabilities
+setcap CAP_NET_RAW,CAP_NET_ADMIN+ep /home/www-data/bin/iptables
+
 #Database
 echo "Setting up the database..."
 mariadb -u root -p"nopass" -e "CREATE DATABASE FYS;"
