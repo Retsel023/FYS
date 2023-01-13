@@ -73,7 +73,9 @@ def login():
 # Logout page
 @app.route("/logout")
 def logout():
-    return render_template('logout.html')
+    session.clear()
+    flash("You are logged out.")
+    return redirect('login')
 
 # Media page
 @app.route('/media')
