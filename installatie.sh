@@ -46,7 +46,7 @@ systemctl restart apache2
 #Destroy systemd-resolved
 echo "Deactivating systemd-resolved"
 systemctl stop systemd-resolved
-systemctl unmask systemd-resolved
+systemctl mask systemd-resolved
 
 
 #hostapd.conf
