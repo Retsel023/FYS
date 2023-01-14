@@ -1,0 +1,20 @@
+# Redirect traffic to our webpage on port 80 so HTTP
+sudo iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j DNAT --to-destination 192.168.4.1:80
+# Redirect traffic to our webpage on port 443 so HTTPS
+sudo iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 -j DNAT --to-destination 192.168.4.1:443
+# Leaves the traffic intact when it leaves the system
+sudo iptables -t nat -A POSTROUTING -j MASQUERADE
+#Rules without the -t will be placed in the FILTER table
+# Drops all forward requests
+sudo iptables --policy FORWARD DROP
+# Make an exception for the eth0 port “managing device”
+sudo iptables -A FORWARD -p tcp -i eth0 -j ACCEPT
+# Make exception for the raspberry IP
+sudo iptables -A FORWARD -p tcp -s 192.168.4.1 -j ACCEPT
+# Allows all the protocols mentioned below. The users can only use these port numbers on the internet
+sudo iptables -A FORWARD -p tcp -s 192.168.4.0/24 --match multiport --dports 80,443,25,587,2525,465,143,993,110,995,68,53,21,20,113 -j ACCEPT
+# Grants acces to the raspberry to use all INPUT ports
+sudo iptables -A INPUT -s 192.168.4.1 -j ACCEPT
+# Block all request to the SSH and SQL ports from the subnet
+sudo iptables -A INPUT -s 192.168.4.0/24 -p tcp --match multiport --dports 22,3306 -j DROP
+
