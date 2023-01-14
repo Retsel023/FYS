@@ -4,6 +4,6 @@ Username: "pi"
 
 USAGE:
 1. cd FYS
-2. chmod +x installatie2.sh
-3. sed -i -e 's/\r$//' installatie2.sh
-4. sudo ./installatie2.sh
+2. chmod +x installatie.sh
+3. sed -i -e 's/\r$//' installatie.sh
+4. sudo ./installatie.sh
