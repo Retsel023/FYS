@@ -72,11 +72,30 @@ yes | cp -rf 50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml
 yes | cp -rf sysctl.conf /etc/sysctl.conf
 sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
 
-#iptables
+################
+### iptables ###
+################
 echo "Setting up the iptable rules..."
-iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
+# Redirect traffic to our webpage on port 80 so HTTP
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j DNAT --to-destination 192.168.4.1:80
+# Redirect traffic to our webpage on port 443 so HTTPS
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 -j DNAT --to-destination 192.168.4.1:443
+# Leaves the traffic intact when it leaves the system
+iptables -t nat -A POSTROUTING -j MASQUERADE
+#Rules without the -t will be placed in the FILTER table
+# Drops all forward requests
+iptables --policy FORWARD DROP
+# Make an exception for the eth0 port “managing device”
+iptables -A FORWARD -p tcp -i eth0 -j ACCEPT
+# Make exception for the raspberry IP
+iptables -A FORWARD -p tcp -s 192.168.4.1 -j ACCEPT
+# Allows all the protocols mentioned below. The users can only use these port numbers on the internet
+iptables -A FORWARD -p tcp -s 192.168.4.0/24 --match multiport --dports 80,443,25,587,2525,465,143,993,110,995,68,53,21,20,113 -j ACCEPT
+# Grants acces to the raspberry to use all INPUT ports
+iptables -A INPUT -s 192.168.4.1 -j ACCEPT
+# Block all request to the SSH and SQL ports from the subnet
+iptables -A INPUT -s 192.168.4.0/24 -p tcp --match multiport --dports 22,3306 -j DROP
+
 
 sh -c "iptables-save > /etc/iptables.ipv4.nat"
 
