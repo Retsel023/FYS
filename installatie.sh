@@ -43,7 +43,7 @@ echo "creating the certificate..."
 openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /var/www/server.key -out /var/www/server.crt -subj "/C=NL/ST=North-Holland/L=Amsterdam/CN=127.0.1.1"
 systemctl restart apache2
 
-#unbinding systemctl-resolved from port 53
+#unbinding systemd-resolved from port 53
 printf '%s\n' '[Resolve]' 'DNSStubListener=no' | sudo tee /etc/systemd/resolved.conf
 systemctl restart systemd-resolved
 
