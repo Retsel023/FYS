@@ -1,3 +1,5 @@
+![Alt text](https://logo-download.com/wp-content/data/images/png/Corendon-Dutch-Airlines-logo.png "Corendon image")
+
 Install:
 - Ubuntu server 22.04 LTS 64 bit
 - Username: "pi"
