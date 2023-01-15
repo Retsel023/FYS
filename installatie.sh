@@ -107,7 +107,7 @@ echo "Creating the rc.local config..."
 touch /etc/rc.local
 touch /etc/systemd/system/rc-local.service
 printf '%s\n' '[Unit]' 'Description=/etc/rc.local Compatibillity' 'ConditionPathExists=/etc/rc.local' '' '[Service]' 'Type=forking' 'ExecStart=/etc/rc.local start' 'TimeoutSec=0' 'StandardOutput=tty' 'RemainAfterExit=yes' 'SysVStartPriority=99' '' '[Install]' 'WantedBy=multi-user.target' | sudo tee /etc/systemd/system/rc-local.service
-printf '%s\n' '#!/bin/bash' 'iptables-restore < /etc/iptables.ipv4.nat' 'sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"' 'exit 0' | sudo tee /etc/rc.local
+printf '%s\n' '#!/bin/bash' 'iptables-restore < /etc/iptables.ipv4.nat' 'sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"' 'systemctl restart dnsmasq' 'exit 0' | sudo tee /etc/rc.local
 chmod +x /etc/rc.local
 systemctl unmask rc-local
 systemctl enable rc-local
