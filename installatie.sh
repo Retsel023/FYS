@@ -15,8 +15,8 @@ apt update && apt upgrade -y
 echo "Installation items complete!"
 #git
 git clone https://github.com/Retsel023/FYS.git
-mv -r /FYS /home/pi/FYS 
-cd /home/pi/FYS
+mv -r /FYS /home 
+cd /home/FYS
 
 #fys.conf and apache config
 echo "Setting up the Apache configuration..."
@@ -35,7 +35,7 @@ source venv/bin/activate
 #pip install flask
 #pip install mariadb
 deactivate
-cd /home/pi/FYS
+cd /home/FYS
 yes | cp -rf FYS_website/website/* /var/www/fys
 
 #https certificate
