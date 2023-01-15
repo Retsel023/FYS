@@ -1,6 +1,6 @@
 Install:
 - Ubuntu server 22.04 LTS 64 bit
-Username: "pi"
+- Username: "pi"
 
 USAGE:
 1. cd FYS
