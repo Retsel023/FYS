@@ -1,4 +1,4 @@
-![Alt text](https://logo-download.com/wp-content/data/images/png/Corendon-Dutch-Airlines-logo.png "Corendon image")
+![Alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Corendon_Airlines_Logo_2017.svg/2560px-Corendon_Airlines_Logo_2017.svg.png "Corendon image")
 
 Install:
 - Ubuntu server 22.04 LTS 64 bit
