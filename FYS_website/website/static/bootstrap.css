@@ -5,15 +5,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
-.bg {
-  /* The image used */
-  background-image: "images/clouds.jpeg'";
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: auto;
-}
-
 video {
   object-fit: cover;
 }
