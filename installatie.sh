@@ -37,6 +37,7 @@ source venv/bin/activate
 deactivate
 cd /home/FYS
 yes | cp -rf FYS_website/website/* /var/www/fys
+rm -r /var/www/html
 
 #https certificate
 echo "creating the certificate..."
