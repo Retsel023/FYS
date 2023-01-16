@@ -46,18 +46,19 @@ def login():
             query = "SELECT * FROM Persoon WHERE Naam = %s AND Ticketnummer = %s;"
             ticket_number = request.form.get('ticket_number')
             checkbox_terms = request.form.get('checkbox_terms')
-            Name = request.form.get('username')
-            cur.execute(query, (Name, ticket_number, ))
-            Name, ticket_number_validator, flight_number = cur.fetchone()
-            session["Name"], session["ticket_number"], session["flight_number"] = Name, ticket_number_validator, flight_number
+            name = request.form.get('name')
+            cur.execute(query, (name, ticket_number, ))
+            name, ticket_number_validator, flight_number, destination, departure = cur.fetchone()
+            session["Name"], session["ticket_number"], session["flight_number"], session["destiantion"], session["departure"] = name, ticket_number_validator, flight_number, destination, departure
         except:
-            Name = False
+            name = False
         if checkbox_terms == "on":
-            if Name:
+            if name:
                 if ticket_number == ticket_number_validator:
                     session["login"] = "Yes"
                     try:
-                        subprocess.call(["sudo", "iptables", "-t", "nat", "-I", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
+                        #subprocess.call(["sudo", "iptables", "-t", "nat", "-I", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
+                        None
                     except:
                         return redirect(url_for("home"))
                     return redirect(url_for("home"))
@@ -73,6 +74,7 @@ def login():
 # Logout page
 @app.route("/logout")
 def logout():
+    subprocess.call(["sudo", "iptables", "-t", "nat", "-D", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
     session.clear()
     flash("You are logged out.")
     return redirect('login')
@@ -90,3 +92,4 @@ def terms():
 
 if __name__ == "__main__":
     app.run()
+
