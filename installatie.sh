@@ -15,8 +15,8 @@ apt update && apt upgrade -y
 echo "Installation items complete!"
 #git
 git clone https://github.com/Retsel023/FYS.git
-mv /FYS /home/pi/FYS 
-cd /home/pi/FYS
+mv /FYS /home/FYS 
+cd /home/FYS
 
 #ssh
 yes | cp -rf sshd_config /etc/ssh/sshd_config
@@ -38,7 +38,7 @@ source venv/bin/activate
 #pip install flask
 #pip install mariadb
 deactivate
-cd /home/pi/FYS
+cd /home/FYS
 yes | cp -rf FYS_website/website/* /var/www/fys
 rm -r /var/www/html
 
