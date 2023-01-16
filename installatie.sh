@@ -15,7 +15,8 @@ apt update && apt upgrade -y
 echo "Installation items complete!"
 #git
 git clone https://github.com/Retsel023/FYS.git
-mv -r /FYS /home 
+mkdir /homne/FYS
+mv -r /FYS/* /home/FYS 
 cd /home/FYS
 
 #ssh
