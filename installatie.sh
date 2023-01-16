@@ -45,11 +45,9 @@ rm -r /var/www/html
 #https certificate
 echo "creating the certificate..."
 openssl req -x509 -nodes -days 36500 -newkey rsa:2048 -keyout /var/www/server.key -out /var/www/server.crt -subj "/C=NL/ST=North-Holland/L=Amsterdam/CN=127.0.1.1"
-systemctl restart apache2
 
 #unbinding systemd-resolved from port 53
 printf '%s\n' '[Resolve]' 'DNSStubListener=no' | sudo tee /etc/systemd/resolved.conf
-systemctl restart systemd-resolved
 
 #Destroy systemd-resolved
 #echo "Deactivating systemd-resolved"
@@ -67,7 +65,6 @@ systemctl start hostapd
 #dnsmasq.conf
 echo "Dnsmasq configuration preparation..."
 yes | cp -rf dnsmasq.conf /etc/dnsmasq.conf
-systemctl restart dnsmasq
 yes | cp -rf dnsmasq.service /lib/systemd/system/dnsmasq.service
 
 echo "Netlpan configuration preparation..."
