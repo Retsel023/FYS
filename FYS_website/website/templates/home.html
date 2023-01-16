@@ -2,6 +2,42 @@
 {% block title %}Home{% endblock %}
 {% block navbar_element %}Logout{% endblock %}
 {% block content %}
-<h3 align="center">Welkom to the homepage {{ session["username"] }}</h3>
-<h5 align="center">Your flight number is {{ session["flight_number"] }}, have a good trip!</h5>
+<div class="container">
+    <div class="col d-flex justify-content-center t-1">
+        <div class="card text-white bg-dark mb-3">
+            <div class="card-header">
+                <h3 align="center" class="text-danger">Corendon Plane Wifi</h3>
+            </div>
+            <div class="card-body">
+                <h5>Welcome on board, {{ session["Name"] }}!</h5>
+                <h5 align="center">{{ session["flight_number"] }}</h5>
+                <h5 align="center">{{ session["departure"] }} <img src="{{ url_for('static', filename='images/plane1.png')}}" height="20" alt="logo"> {{ session["destiantion"] }}</h5>
+            {% if session["destiantion"] == "Lapland" %}
+                <a class="weatherwidget-io" href="https://forecast7.com/en/67d9226d50/lapland/" data-label_1="LAPLAND" data-label_2="WEATHER" data-textcolor="#ffffff" data-highcolor="#ff0000" data-lowcolor="#4e7cf8" >LAPLAND WEATHER</a>
+                <script>
+                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
+            {% elif session["destiantion"] == "Switzerland" %}
+                <a class="weatherwidget-io" href="https://forecast7.com/en/46d828d23/switzerland/" data-label_1="SWITZERLAND" data-label_2="WEATHER" data-textcolor="#ffffff" data-highcolor="#ff0000" data-lowcolor="#4e7cf8" >SWITZERLAND WEATHER</a>
+                <script>
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
+            {% else %}
+                <a class="weatherwidget-io" href="https://forecast7.com/en/52d135d29/netherlands/" data-label_1="NETHERLANDS" data-label_2="WEATHER" data-textcolor="#ffffff" data-highcolor="#ff0000" data-lowcolor="#4e7cf8" >NETHERLANDS WEATHER</a>
+                <script>
+                !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+                </script>
+            {% endif %}
+            </div>
+            <div class="card-footer">
+                <h5 align="center">You now have internet acces!</h5>
+                <div class="d-flex justify-content-center">
+                    <a target="_blank" href="https://corendon.com"><button type="button" class="btn btn-danger"><h5>Start browsing</h5></button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                    
+
 {% endblock %}
