@@ -18,6 +18,9 @@ git clone https://github.com/Retsel023/FYS.git
 mv -r /FYS /home 
 cd /home/FYS
 
+#ssh
+yes | cp -rf sshd_config /etc/ssh/sshd_config
+
 #fys.conf and apache config
 echo "Setting up the Apache configuration..."
 yes | cp -rf fys.conf /etc/apache2/sites-available/fys.conf
