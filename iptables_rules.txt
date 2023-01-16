@@ -16,5 +16,5 @@ sudo iptables -A FORWARD -p tcp -s 192.168.4.0/24 --match multiport --dports 80,
 # Grants acces to the raspberry to use all INPUT ports
 sudo iptables -A INPUT -s 192.168.4.1 -j ACCEPT
 # Block all request to the SSH and SQL ports from the subnet
-sudo iptables -A INPUT -s 192.168.4.0/24 -p tcp --match multiport --dports 22,3306 -j DROP
+sudo iptables -A INPUT -s 192.168.4.0/24 -p tcp --match multiport --dports 8612,3306 -j DROP
 
