@@ -5,6 +5,15 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
+.bg {
+  /* The image used */
+  background-image: "images/clouds.jpeg'";
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
 video {
   object-fit: cover;
 }
@@ -65,7 +74,10 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
+  background-image: url(../static/images/clouds.jpg);
+  background-size: cover;
+  z-index: -1;
+  background-attachment: fixed;
 }
 
 [tabindex="-1"]:focus {
@@ -620,6 +632,7 @@ pre code {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
+  margin-top: 5%;
 }
 
 .col {
@@ -2596,8 +2609,8 @@ fieldset:disabled a.btn {
 
 .btn-danger {
   color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
+  background-color: #ff0000;
+  border-color: #ff0000;
 }
 
 .btn-danger:hover {
@@ -4567,6 +4580,7 @@ input[type="button"].btn-block {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  padding: 4%;
 }
 
 .card > hr {
@@ -9895,7 +9909,7 @@ a.text-warning:hover, a.text-warning:focus {
 }
 
 .text-danger {
-  color: #dc3545 !important;
+  color: #ff0000 !important;
 }
 
 a.text-danger:hover, a.text-danger:focus {
