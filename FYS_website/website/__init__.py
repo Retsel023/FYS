@@ -57,8 +57,7 @@ def login():
                 if ticket_number == ticket_number_validator:
                     session["login"] = "Yes"
                     try:
-                        #subprocess.call(["sudo", "iptables", "-t", "nat", "-I", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
-                        None
+                        subprocess.call(["sudo", "iptables", "-t", "nat", "-I", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
                     except:
                         return redirect(url_for("home"))
                     return redirect(url_for("home"))
