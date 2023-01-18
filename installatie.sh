@@ -96,7 +96,8 @@ iptables -A FORWARD -p tcp -i eth0 -j ACCEPT
 # Make exception for the raspberry IP
 iptables -A FORWARD -p tcp -s 192.168.4.1 -j ACCEPT
 # Allows all the protocols mentioned below. The users can only use these port numbers on the internet
-iptables -A FORWARD -p tcp -s 192.168.4.0/24 --match multiport --dports 80,443,25,587,2525,465,143,993,110,995,68,53,21,20,113 -j ACCEPT
+# 5222 = Whatsapp
+iptables -A FORWARD -p tcp -s 192.168.4.0/24 --match multiport --dports 80,443,25,587,2525,465,143,993,110,995,68,53,21,5222,113 -j ACCEPT
 # Grants acces to the raspberry to use all INPUT ports
 iptables -A INPUT -s 192.168.4.1 -j ACCEPT
 # Block all request to the SSH and SQL ports from the subnet
