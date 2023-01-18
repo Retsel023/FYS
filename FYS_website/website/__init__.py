@@ -73,7 +73,7 @@ def login():
 # Logout page
 @app.route("/logout")
 def logout():
-    subprocess.call(["sudo", "iptables", "-t", "nat", "-D", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
+    subprocess.call(["/home/www-data/bin/iptables", "-t", "nat", "-D", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
     session.clear()
     flash("You are logged out.")
     return redirect('login')
