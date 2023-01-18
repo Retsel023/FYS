@@ -7,7 +7,7 @@ import subprocess
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(23)
-
+login_count = 0
 # Connect to MariaDB Platform
 try:
     conn = mariadb.connect(
@@ -41,32 +41,39 @@ def home():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     session["login"] = "No"
+    global login_count
     if request.method == 'POST':
         try:
             query = "SELECT * FROM Persoon WHERE Naam = %s AND Ticketnummer = %s;"
-            ticket_number = request.form.get('ticket_number')
+            ticket_number_form = request.form.get('ticket_number')
             checkbox_terms = request.form.get('checkbox_terms')
             name = request.form.get('name')
-            cur.execute(query, (name, ticket_number, ))
+            cur.execute(query, (name, ticket_number_form, ))
             name, ticket_number_validator, flight_number, destination, departure = cur.fetchone()
             session["Name"], session["ticket_number"], session["flight_number"], session["destiantion"], session["departure"] = name, ticket_number_validator, flight_number, destination, departure
         except:
             name = False
-        if checkbox_terms == "on":
-            if name:
-                if ticket_number == ticket_number_validator:
-                    session["login"] = "Yes"
-                    try:
-                        subprocess.call(["/home/www-data/bin/iptables", "-t", "nat", "-I", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
-                    except:
-                        return redirect(url_for("home"))
-                    return redirect(url_for("home"))
-                else:
-                    flash("Name or Ticketnumber is incorrect!")
+        if login_count <= 3:
+            if checkbox_terms == "on":
+                    if name:
+                        if ticket_number_form == ticket_number_validator:
+                            session["login"] = "Yes"
+                            try:
+                                subprocess.call(["/home/www-data/bin/iptables", "-t", "nat", "-I", "PREROUTING", "-s", f"{request.remote_addr}", "-j", "ACCEPT"])
+                            except:
+                                return redirect(url_for("home"))
+                            return redirect(url_for("home"))
+                        else:
+                            login_count += 1
+                            flash("Name or Ticketnumber is incorrect!")
+                    else:
+                        login_count += 1
+                        flash("Name or Ticketnumber is incorrect!")
+                    
             else:
-                flash("Name or Ticketnumber is incorrect!")
+                flash("Please accept the Terms & Conditions")
         else:
-            flash("Please accept the Terms & Conditions")
+            flash("You tried to many times, Please contact a employee for further assitance")
 
     return render_template("login.html")
 
