@@ -16,3 +16,5 @@ Permission numbers are:
 
 7 = rwx
 
+chmod 777 filename
+chown user:group filename
